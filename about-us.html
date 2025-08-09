@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - MediCare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --clr-dark-green: #1a1a1a;
+      --clr-light: #d1d5db;
+      --clr-darker-green: #0d0d0d;
+      --clr-soft-green: #00c4f5;
+      --clr-muted-green: #008080;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: #0d0d0d;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #0d0d0d;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 18px 2px rgba(34, 34, 34, 0.212);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      border-bottom: 1px solid #4d4d4d28;
+    }
+
+    header .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #00ffd1;
+    }
+
+    header nav {
+      display: flex;
+      align-items: center;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #999999;
+      font-weight: 500;
+    }
+
+    header nav a:hover {
+      color: #ffffff;
+    }
+
+    header .btns {
+      display: flex;
+      align-items: center;
+    }
+
+    header .btns button {
+      padding: 8px 16px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 20px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .login {
+      background: transparent;
+      color: #ffffff;
+    }
+
+    .signup {
+      background: #000;
+      color: rgb(82, 219, 253);
+      box-shadow: 0 6px 8px 2px rgba(27, 27, 27, 0.329);
+    }
+
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    section {
+      padding: 100px 5%;
+    }
+
+    .hero {
+      background: #0d0d0d;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-style: italic;
+      color: #999999;
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto 30px auto;
+    }
+
+    .btn-primary {
+      background: #0dcfffa8;
+      color: #000;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #00c4f5;
+    }
+
+    .about-animated-text {
+      display: flex;
+      justify-content: center;
+      padding: 100px 5%;
+      background-color: #0d0d0d;
+    }
+
+    .about-animated-text .container {
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .about-animated-text h1 {
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .about-animated-text h1 div {
+      background: linear-gradient(to right, #ffffff 50%, #7a7d8313 50%);
+      background-size: 200% 100%;
+      background-position-x: 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .about-animated-text div {
+      background: linear-gradient(to right, #4d8bff 50%, #d1d5db5e 50%);
+      background-size: 200% 100%;
+      background-position-x: 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .stats {
+      padding: 80px 5%;
+      background: #0d0d0d;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #ffffff;
+    }
+
+    .stats-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      width: 220px;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-card h3 {
+      font-size: 36px;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .stat-card p {
+      font-size: 16px;
+      color: #999999;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 40px;
+    }
+
+    .feature, .vision-card {
+      background: #1a1a1a;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 40px;
+    }
+
+    footer {
+      background: #0b0b0b;
+      color: white;
+      padding: 60px 5%;
+      text-align: center;
+      margin-top: 80px;
+    }
+
+    footer p {
+      color: #888;
+      margin-top: 10px;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal {
+      background-color: var(--clr-dark-green);
+      max-width: 1000px;
+      width: 90%;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .modal .left-panel {
+      flex: 1;
+      background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2409870e-85bd-4893-9edb-916f9de17c06.png') center center/cover no-repeat;
+    }
+
+    .modal .right-panel {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--clr-dark-green);
+    }
+
+    .modal .right-panel h1 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .form-group {
+      flex: 1 1 calc(50% - 10px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      flex: 1 1 100%;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--clr-light);
+      margin-bottom: 6px;
+    }
+
+    .input-icon-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon-wrapper input {
+      padding: 12px;
+      padding-right: 36px;
+      border-radius: 12px;
+      border: none;
+      background-color: var(--clr-light);
+      font-size: 0.9rem;
+      color: var(--clr-darker-green);
+      width: 100%;
+    }
+
+    .input-icon-wrapper i {
+      position: absolute;
+      right: 12px;
+      color: var(--clr-darker-green);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .input-icon-wrapper input:focus {
+      outline: 2px solid var(--clr-soft-green);
+      background-color: #fff;
+    }
+
+    .login-btn {
+      background-color: var(--clr-soft-green);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 0 12px var(--clr-soft-green);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      background-color: var(--clr-muted-green);
+      box-shadow: 0 0 16px var(--clr-soft-green);
+    }
+
+    .additional-links {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.85rem;
+    }
+
+    .additional-links a {
+      color: #e0e5dc;
+      text-decoration: none;
+    }
+
+    .additional-links a:hover {
+      text-decoration: underline;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 14px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .modal {
+        flex-direction: column;
+      }
+
+      .modal .left-panel,
+      .modal .right-panel {
+        flex: 1 1 100%;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      header nav {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: #0d0d0d;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        clip-path: circle(0px at 90% -10%);
+        -webkit-clip-path: circle(0px at 90% -10%);
+        transition: all 0.5s ease-out;
+        pointer-events: none;
+      }
+
+      header nav.active {
+        clip-path: circle(1000px at 90% -10%);
+        -webkit-clip-path: circle(1000px at 90% -10%);
+        pointer-events: all;
+      }
+
+      header nav a {
+        margin: 10px 0;
+      }
+
+      header .btns {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      header .btns button {
+        margin: 10px 0;
+        width: 100%;
+        max-width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Medi<span style="color:#3b82f6;">care</span></div>
+    <div class="menu-toggle" id="mobile-menu">
+      <i class="fas fa-bars"></i>
+    </div>
+    <nav id="nav">
+      <a href="#">Home</a>
+      <a href="#">Services</a>
+      <a href="#">About</a>
+      <div class="btns">
+        <button class="login">Log In</button>
+        <button class="signup" onclick="openModal()">Sign Up</button>
+      </div>
+    </nav>
+  </header>
+  <section class="hero">
+    <h1>Your medicine. Your choices. Made simpler.</h1>
+    <p>We’re two students on a mission — helping people find affordable medicine alternatives by uncovering what’s hidden behind brand names and overpriced prescriptions.</p>
+    <button class="btn-primary">Explore More</button>
+  </section>
+  <section class="about-animated-text">
+    <div class="container">
+      <h1 id="animatedAbout">
+        At MediCare, we help users find trusted, affordable alternatives to high-cost branded medicines — often cutting prices from thousands to just a few rupees. Backed by real-time inventory and research, our platform ensures smarter, transparent choices in healthcare.
+        We're actively building AI-powered tools to improve recommendations, and soon integrating expert-verified data from certified doctors. Our mission is simple: make quality medicine accessible, credible, and fair for everyone — no compromises.
+      </h1>
+    </div>
+  </section>
+  <section class="stats">
+    <h2 class="section-title">Our Impact So Far</h2>
+    <div class="stats-grid">
+      <div class="stat-card"><h3>1,200+</h3><p>Stores Onboarded</p></div>
+      <div class="stat-card"><h3>85,000+</h3><p>People Helped</p></div>
+      <div class="stat-card"><h3>9,500+</h3><p>Medicines Tracked</p></div>
+    </div>
+  </section>
+  <section>
+    <h2 class="section-title">Our Values</h2>
+    <p style="text-align:center; margin: 0 auto 30px auto; font-size: 16px; color: #444;">
+      Committed to affordable, transparent healthcare for all. Empowering smart health choices.
+    </p>
+    <div class="features">
+      <div class="feature">Affordable Healthcare for All</div>
+      <div class="feature">Transparency in Medicine Pricing</div>
+      <div class="feature">Empowering Smart Decisions</div>
+      <div class="feature">Supporting Generic Alternatives</div>
+    </div>
+  </section>
+  <section>
+    <h2 class="section-title">Our Mission</h2>
+    <p style="text-align:center; margin: 0 auto 30px auto; font-size: 16px; color: #444;">
+      A world where everyone has access to trustworthy and affordable medicine, ensuring no compromises on health and well-being.
+    </p>
+    <div class="vision-grid">
+      <div class="vision-card">One-click alternative finder</div>
+      <div class="vision-card">Crowdsourced pricing updates</div>
+      <div class="vision-card">Smart pharmacy integrations</div>
+      <div class="vision-card">AI-powered recommendations (soon)</div>
+    </div>
+  </section>
+  <footer>
+    <h3>Let’s Connect</h3>
+    <p>Contact us at team@medicare.org • Built by two students who care deeply about your health and your wallet.</p>
+  </footer>
+  <!-- Modal Popup -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <div class="left-panel"></div>
+      <div class="right-panel">
+        <h1><strong>Medi</strong>Cure</h1>
+        <form>
+          <div class="form-group">
+            <label for="ownername">Owner's Full Name</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="ownername" placeholder="Name" />
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-icon-wrapper">
+              <input type="email" id="email" placeholder="E-mail" />
+              <i class="fas fa-envelope"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="shopid">Shop ID</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="shopid" placeholder="XXXX987" />
+              <i class="fas fa-id-badge"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="shopname">Shop Name</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="shopname" placeholder="Shop name" />
+              <i class="fas fa-store"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <div class="input-icon-wrapper">
+              <input type="text" id="location" placeholder="Region" />
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <div class="input-icon-wrapper">
+              <input type="tel" id="phone" placeholder="Phone Number" />
+              <i class="fas fa-phone-alt"></i>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label for="password">Create Password</label>
+            <div class="input-icon-wrapper">
+              <input type="password" id="password" placeholder="Enter your password" />
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <button type="submit" class="login-btn">CREATE ACCOUNT</button>
+          </div>
+          <div class="form-group full-width additional-links">
+            <p>Already registered? <a href="#">Login here</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Popup Script -->
+  <script>
+    function openModal() {
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    window.onclick = function (e) {
+      const modal = document.getElementById('modal');
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    document.getElementById('mobile-menu').addEventListener('click', function() {
+      document.getElementById('nav').classList.toggle('active');
+    });
+  </script>
+  <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  const split = new SplitText("#animatedAbout", { type: "lines" });
+  split.lines.forEach(line => {
+    gsap.to(line, {
+      backgroundPositionX: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: line,
+        start: "top 60%",
+        end: "bottom 50%",
+        scrub: 0.4
+      }
+    });
+  });
+
+  const lenis = new Lenis({
+    smooth: true,
+    lerp: 0.045,
+    direction: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothTouch: true,
+    touchMultiplier: 1.3
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+</script>
+</body>
+</html>

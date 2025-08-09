@@ -1,0 +1,100 @@
+1. Atorvastatin / Storvas / Lipitor  
+2. Amlodipine / Norvasc / Stamlo  
+3. Metformin / Glucophage / Bigomet  
+4. Levothyroxine / Thyronorm / Eltroxin  
+5. Paracetamol / Calpol / Metacin  
+6. Amoxicillin / Mox / Novamox  
+7. Cefixime / Ocin / Zifi  
+8. Azithromycin / Zithrocin / Azimax  
+9. Pantoprazole / Pan 40 / Pantocid  
+10. Omeprazole / Omez / Nexium  
+11. Diclofenac / Voveran / Dynapar  
+12. Tramadol / Ultracet / Tramazac  
+13. Ciprofloxacin / Ciplox / Cifran  
+14. Metronidazole / Flagyl / Metrogyl  
+15. Rabeprazole / Razo / Rabicip  
+16. Losartan / Repace / Angizaar  
+17. Telmisartan / Telsar / Telvas  
+18. Hydrochlorothiazide / Hylol / Akaride  
+19. Atenolol / Tenorate / Atpres  
+20. Sertraline / Zoloft / Lustral  
+21. Paroxetine / Seroxat / Pexeva (generic)  
+22. Escitalopram / Cipralex / Lexapro  
+23. Fluoxetine / Prozac / Sarafem  
+24. Metoprolol / Betaloc / Lopressor  
+25. Levocetirizine / Xyzal / Legz  
+26. Cetirizine / Cetzine / Alerid  
+27. Montelukast / Montek / Monticope  
+28. Salbutamol / Ventolin / Asthalin  
+29. Budesonide/Formoterol (Symbicort) / Budamate / Budonorm  
+30. Fluticasone Nasal Spray / Avamys / Nasoflo  
+31. Beclomethasone Inhaler / Qvar / Becotide  
+32. Insulin Glargine / Basalog / Basaglar  
+33. Insulin Regular / Humulin R / Novolin R  
+34. Glimepiride / Amaryl / Glimco  
+35. Sitagliptin / Januvia / Sitafil  
+36. Dapagliflozin / Forxiga / Dapazide  
+37. Empagliflozin / Jardiance / Empamid  
+38. Pioglitazone / Actos / Pioz  
+39. Clopidogrel / Plavix / Deplatt  
+40. Aspirin / Disprin / ASA  
+41. Clopamide / Cepam / Diamox?  
+42. Warfarin / Sofarin / Marevan  
+43. Rivaroxaban / Xarelto / Rivarox  
+44. Dabigatran / Pradaxa / Dabigat  
+45. Enoxaparin / Clexane / Enox  
+46. Atorvastatin + Fenofibrate (Combos) / Lipitrol Plus / LipiGiant  
+47. Vitamin D3 / Calcirol / Zydol  
+48. Calcium + Vitamin D / Calcimax-D3 / Shelcal D3  
+49. Iron + Folic Acid / IFA / Folvite  
+50. Zinc Sulfate / Zydus / Nature’s Zinc  
+51. Betamethasone Cream / Diprolene / Betnovate  
+52. Mometasone Cream / ELOCON / Momate  
+53. Clobetasol Propionate / Dermovate / Clobetasol  
+54. Dexamethasone / Dexona / Dacort  
+55. Prednisolone / Wysolone / Predone  
+56. Montmorillonite (anti-diarrheal) / Enterogermina / Motilium?  
+57. Ondansetron / Ondem / Emeset  
+58. Ranitidine / Histac / Rantac  
+59. Pantoprazole + Domperidone / Pantop-D / Domstal Combo  
+60. Domperidone / Motilium / Vomistop  
+61. Propranolol / Inderal / Propranol  
+62. Atenolol + Chlorthalidone / Tenolol C / Nilol C  
+63. Atorvastatin + Amlodipine / Prestalia / Lipovast AM  
+64. Losartan + Hydrochlorothiazide / Hyzaar / Losar‑H  
+65. Simvastatin / Simvacor / Zocor  
+66. Rosuvastatin / Crestor / Rosuless  
+67. Fenofibrate / Lipicard / Tricor  
+68. Sitagliptin + Metformin / Janumet / Glucoredal  
+69. Betahistine / Serc / Betahist  
+70. Levocetirizine + Montelukast / Xy Mont / Levmo  
+71. Gliclazide / Diamicron / Reclide  
+72. Glipizide / Glucotrol / Glipizide (generic)  
+73. Linagliptin / Trajenta / Galaxia  
+74. Insulin Aspart / NovoRapid / Fiasp  
+75. Insulin Lispro / Humalog / Liprolog  
+76. Tiotropium / Spiriva / Tiova  
+77. Ipratropium Bromide / Atrovent / Ipratrop  
+78. Mupirocin Ointment / Bactroban / Mupizole  
+79. Fluconazole / Fungilin / DFL  
+80. Clotrimazole / Canesten / Lotrisone  
+81. Nystatin / Nystan / Nilstat  
+82. Acyclovir / Acyclovir (generic) / Zovirax  
+83. Oseltamivir / Tamiflu / Osel  
+84. Sofosbuvir + Velpatasvir / Epclusa / Sofvel  
+85. Tenofovir Disoproxil / TDF / Viread  
+86. Dolutegravir / Tivicay / Dolutegravir (generic)  
+87. Lamivudine / Epivir / Lamivir  
+88. Efavirenz / Sustiva / Efavirenz (generic)  
+89. Indinavir / Crixivan / Indinavir (generic)  
+90. Ritonavir / Norvir / Ritonavir (generic)  
+91. Abacavir / Ziagen / Abacavir (generic)  
+92. Zidovudine / Retrovir / Zidovudine (generic)  
+93. Emtricitabine / Emtriva / FTC (generic)  
+94. Lamivudine + Zidovudine / Combivir / Zidovex Combo  
+95. Lepirudin / Refludan / Lepirudin (generic)  
+96. Imatinib / Gleevec / Imatinib (generic)  
+97. Erlotinib / Tarceva / Erlotinib (generic)  
+98. Sorafenib / Nexavar / Sorafenib (generic)  
+99. Bevacizumab / Avastin / Bevacizumab (biosimilar)  
+100. Trastuzumab / Herceptin / Trastuzumab (biosimilar)  

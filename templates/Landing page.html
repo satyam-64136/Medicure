@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUSSCI - AI Partner for Scientific Discovery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+#preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#preloader .loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3b82f6;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+}
+body {
+  background-color: #f0f2f5;
+  color: #121212;
+  overflow-x: hidden;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+.logo span {
+  color: #3b82f6;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+.nav-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: #3b82f6;
+}
+.nav-buttons button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s, color 0.3s;
+}
+.login {
+  background: none;
+  color: #121212;
+}
+.signup {
+  background-color: #121212;
+  color: white;
+}
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.hero {
+  text-align: center;
+  padding: 150px 20px;
+  background: linear-gradient(135deg, #d0ebff, #e5f4ff, #f9fbff);
+  border-radius: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.7;
+  z-index: 0;
+}
+.hero::before {
+  width: 400px;
+  height: 400px;
+  background: #a7d3f4;
+  top: -100px;
+  left: -150px;
+}
+.hero::after {
+  width: 500px;
+  height: 500px;
+  background: #7fc4ff;
+  bottom: -150px;
+  right: -200px;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  position: relative;
+  display: inline-block;
+  font-size: 42px;
+  font-weight: 700;
+  color: #121212;
+  padding: 0.2rem 1rem;
+  line-height: 1.3;
+  z-index: 1;
+}
+
+.hero h1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #2169d657;
+  border-radius: 15px;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.hero h1:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.hero-subtext {
+  font-size: 16px;
+  font-style: italic;
+  color: #444;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.get-started {
+  padding: 14px 28px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.get-started:hover {
+  background-color: #2563eb;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+}
+.sub-text {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #555;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 12px;
+  border-radius: 45px;
+  width: 60px;
+  transition: width 0.5s ease, background-color 0.5s ease;
+
+}
+.search-bar.expanded {
+  width: 75vh;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 12px;
+  width: 0;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  font-size: 18px;
+  flex: 1;
+}
+.search-bar.expanded input {
+  width: 100%;
+  opacity: 1;
+}
+.search-icon {
+  cursor: pointer;
+  color: #000;
+  font-size: 24px;
+  padding: 12px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+.search-icon:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background: white;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
+  .hero h1 {
+    font-size: 36px;
+    padding: 0 10px;
+  }
+}
+</style>
+
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <header class="navbar">
+        <div class="logo">Medi<span>care</span></div>
+        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+        <nav class="nav-links" id="nav-links">
+            <a href="#">About us</a>
+            <a href="#">How it works</a>
+            <a href="#">Research Library</a>
+        </nav>
+        <div class="nav-buttons">
+            <button class="login">Log In</button>
+            <button class="signup">Sign Up</button>
+        </div>
+    </header>
+    <main>
+        <section class="hero" data-aos="fade-up">
+           <div class="hero-content">
+            <h1 class="highlight-heading">Your medicine. Your choices. Made simpler.</h1>
+            <p class="hero-subtext">Easily check stock, compare options, and find what fits.</p>
+
+            <form method="POST" action="/" id="searchForm">
+    <div class="search-bar" id="searchBar">
+        <input type="text" name="medicine_name" id="searchInput" placeholder="Search for a medicine..."  required>
+        <i class="fas fa-search search-icon" id="searchIcon"></i>
+    </div>
+</form>
+
+            <button class="get-started">Get Started →</button>
+            </div>
+
+        </section>
+    </main>
+    <!-- AOS Animation JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    // Preloader
+    window.addEventListener('load', () => {
+        document.getElementById('preloader').classList.add('hidden');
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    });
+
+    // Hamburger Menu Toggle
+    document.getElementById('hamburger').addEventListener('click', () => {
+        document.getElementById('nav-links').classList.toggle('active');
+    });
+
+    // Search Functionality
+    const searchBar = document.getElementById('searchBar');
+    const searchIcon = document.getElementById('searchIcon');
+    const searchInput = document.getElementById('searchInput');
+    const searchForm = document.getElementById('searchForm');
+
+    // Function to expand the search bar
+    function expandSearchBar() {
+        searchBar.classList.add('expanded');
+        searchInput.focus();
+    }
+
+    searchIcon.addEventListener('click', (event) => {
+        if (!searchBar.classList.contains('expanded')) {
+            expandSearchBar();
+        } else {
+            if (searchInput.value.trim() !== '') {
+                searchForm.submit(); // Submit the form if there's input
+            }
+        }
+        event.preventDefault(); // Prevent the default icon click behavior
+    });
+
+    // Expand search bar when spacebar is pressed
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space' && !searchBar.classList.contains('expanded')) {
+            event.preventDefault(); // Prevent default behavior of spacebar
+            expandSearchBar();
+        }
+    });
+
+    // Collapse search bar when input loses focus and is empty
+    searchInput.addEventListener('blur', () => {
+        if (searchInput.value === '') {
+            searchBar.classList.remove('expanded');
+        }
+    });
+
+    // Optional: Submit form on Enter key press
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+            searchForm.submit();
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medicure Inventory</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary-blue: #2563EB;
+      --sky-blue: #E6F2FF;
+      --white: #ffffff;
+      --text-main: #000000;
+      --text-muted: #677796;
+      --glass-bg: rgba(255, 255, 255, 0.4);
+      --border-glass: rgba(255, 255, 255, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, var(--sky-blue), var(--white));
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid var(--border-glass);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar h2 {
+      font-size: 1.3rem;
+      color: var(--primary-blue);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .sidebar button {
+      background: transparent;
+      border: 1px solid var(--primary-blue);
+      color: var(--primary-blue);
+      padding: 0.7rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar button:hover {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    .main {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header input {
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      width: 250px;
+    }
+
+    .btn-primary {
+      padding: 0.7rem 1.4rem;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.6);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+    }
+
+    thead {
+      background: rgba(230, 242, 255, 0.8);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .edit, .delete {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      font-weight: 500;
+    }
+
+    .edit {
+      background: #10B981;
+    }
+
+    .delete {
+      background: #EF4444;
+    }
+
+    .chart-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .circular-progress {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .circular-progress svg {
+      width: 200px;
+      height: 200px;
+      transform: rotate(-90deg);
+    }
+
+    .circular-progress circle {
+      fill: none;
+      stroke-width: 15;
+      cx: 100;
+      cy: 100;
+      r: 85;
+    }
+
+    .circular-progress .bg {
+      stroke: #e5e7eb;
+    }
+
+    .circular-progress .progress {
+      stroke-linecap: round;
+      stroke-dasharray: 534;
+      stroke-dashoffset: 534;
+      transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .percentage-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+      font-size: 24px;
+      color: #111827;
+    }
+
+    #floatingTooltip {
+        position: fixed;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.753);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 12px 16px;
+        color: #111827;
+        font-size: 14px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.158);
+        pointer-events: none;
+        max-width: 260px;
+        display: none;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal form {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modal input {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .modal button {
+      padding: 0.6rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary-blue);
+      color: white;
+      cursor: pointer;
+    }
+
+    .modal .cancel {
+      background: gray;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        flex-direction: row;
+        height: auto;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-glass);
+        justify-content: space-around;
+      }
+    }
+
+
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  background-image: url('https://www.svgrepo.com/show/357035/angle-down.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+.styled-select {
+  padding: 0.6rem;
+  padding-right: 2.5rem;
+  border: 1px solid var(--primary-blue);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--text-main);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.custom-select-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  list-style: none;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.custom-select-list li {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.custom-select-list li:hover {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Medicure</h2>
+    <button onclick="renderTable()">Dashboard</button>
+    <button onclick="openModal()">Add Medicine</button>
+    <button>Xtra buttom</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="header">
+      <input type="text" id="searchInput" placeholder="Search medicine..." />
+      <button class="btn-primary" onclick="openModal()">+ Add Medicine</button>
+    </div>
+
+    <div class="glass-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Qty</th>
+            <th>Expiry</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="medicineTable"></tbody>
+      </table>
+    </div>
+
+    <div class="glass-card chart-box">
+      <div class="circular-progress">
+        <svg>
+          <circle class="bg" cx="100" cy="100" r="85"></circle>
+          <circle class="progress" cx="100" cy="100" r="85"></circle>
+        </svg>
+        <div class="percentage-text" id="totalPercent">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="floatingTooltip"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <form id="medicineForm">
+      <h3>Add Medicine</h3>
+      <input type="text" id="medName" placeholder="Medicine Name" required />
+      <input type="number" id="medQty" placeholder="Quantity" required />
+      <input type="date" id="medExpiry" required />
+      <div class="custom-select-wrapper">
+  <input type="text" id="medCategory" class="styled-select" placeholder="Select or type category" required autocomplete="off" />
+  <ul id="categoryList" class="custom-select-list"></ul>
+</div>
+
+
+      <input type="number" id="medPrice" placeholder="Price" required />
+      <button type="submit">Save</button>
+      <button type="button" class="cancel" onclick="closeModal()">Cancel</button>
+    </form>
+  </div>
+
+  <script>
+    const totalCapacity = 10000;
+    const medicines = [
+      { name: "Paracetamol", qty: 800, expiry: "2025-06-30", category: "Painkiller", price: 10 },
+      { name: "Amoxicillin", qty: 200, expiry: "2024-12-15", category: "Antibiotic", price: 15 },
+      { name: "Ibuprofen", qty: 1200, expiry: "2024-11-10", category: "Painkiller", price: 8 },
+      { name: "Cetirizine", qty: 500, expiry: "2024-10-01", category: "Antibiotic", price: 9 }
+    ];
+
+    const table = document.getElementById("medicineTable");
+    const modal = document.getElementById("modal");
+    const form = document.getElementById("medicineForm");
+    const totalPercent = document.getElementById("totalPercent");
+    const progressCircle = document.querySelector(".progress");
+    const tooltip = document.getElementById("floatingTooltip");
+
+    const categories = [
+  "Antibiotic",
+  "Painkiller",
+  "Allergy",
+  "Antacid",
+  "Cough Syrup",
+  "Vitamin Supplement",
+  "Antiviral",
+  "Steroid",
+  "Anti-inflammatory",
+  "Antifungal"
+];
+
+const medCategoryInput = document.getElementById("medCategory");
+const categoryList = document.getElementById("categoryList");
+
+medCategoryInput.addEventListener("focus", () => {
+  const value = medCategoryInput.value.toLowerCase();
+  const filtered = categories.filter(cat => cat.toLowerCase().includes(value));
+
+  categoryList.innerHTML = "";
+  if (filtered.length > 0) {
+    categoryList.style.display = "block";
+    filtered.forEach(cat => {
+      const li = document.createElement("li");
+      li.textContent = cat;
+      li.onclick = () => {
+        medCategoryInput.value = cat;
+        categoryList.style.display = "none";
+      };
+      categoryList.appendChild(li);
+    });
+  }
+});
+
+
+// Hide dropdown if clicked outside
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".custom-select-wrapper")) {
+    categoryList.style.display = "none";
+  }
+});
+
+
+    function renderTable(data = medicines) {
+      table.innerHTML = "";
+      data.forEach((m, i) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${m.name}</td>
+          <td>${m.qty}</td>
+          <td>${m.expiry}</td>
+          <td>${m.category}</td>
+          <td>₹${m.price}</td>
+
+          <td>
+            <button class="edit" onclick="editMedicine(${i})">Edit</button>
+            <button class="delete" onclick="deleteMedicine(${i})">Delete</button>
+          </td>
+        `;
+
+        row.addEventListener("mousemove", (e) => {
+          const percent = ((m.qty / totalCapacity) * 100).toFixed(1);
+          const cheaper = medicines
+            .filter(other => other.category === m.category && other.price < m.price && other.name !== m.name)
+            .sort((a, b) => a.price - b.price)[0];
+
+          tooltip.style.display = "block";
+          tooltip.style.left = e.pageX + 15 + "px";
+          tooltip.style.top = e.pageY + 15 + "px";
+
+          tooltip.innerHTML = `
+            <strong>${m.name}</strong><br>
+            Storage: ${percent}% of capacity<br>
+            ${cheaper ? `<span>Alt: ${cheaper.name} (₹${cheaper.price})</span>` : `<em>No cheaper alternative</em>`}
+          `;
+        });
+
+        row.addEventListener("mouseleave", () => {
+          tooltip.style.display = "none";
+        });
+
+        table.appendChild(row);
+      });
+      updateTotalProgress();
+    }
+
+    function updateTotalProgress() {
+      const totalQty = medicines.reduce((sum, med) => sum + med.qty, 0);
+      const percent = Math.min(100, Math.round((totalQty / totalCapacity) * 100));
+      const dashOffset = 534 - (534 * percent) / 100;
+      progressCircle.style.strokeDashoffset = dashOffset;
+      progressCircle.style.stroke = percent > 70 ? "#10B981" : percent > 30 ? "#F59E0B" : "#EF4444";
+      totalPercent.innerText = `${percent}%`;
+    }
+
+    function openModal() {
+      modal.style.display = "flex";
+      form.reset();
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+let editIndex = null;
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const updatedMed = {
+    name: document.getElementById("medName").value,
+    qty: parseInt(document.getElementById("medQty").value),
+    expiry: document.getElementById("medExpiry").value,
+    category: document.getElementById("medCategory").value,
+    price: parseFloat(document.getElementById("medPrice").value)
+  };
+
+  if (editIndex !== null) {
+    medicines[editIndex] = updatedMed;
+    editIndex = null;
+  } else {
+    medicines.push(updatedMed);
+  }
+
+  closeModal();
+  renderTable();
+});
+
+
+    function deleteMedicine(index) {
+      medicines.splice(index, 1);
+      renderTable();
+    }
+
+    function editMedicine(index) {
+        const med = medicines[index];
+        document.getElementById("medName").value = med.name;
+        document.getElementById("medQty").value = med.qty;
+        document.getElementById("medExpiry").value = med.expiry;
+        document.getElementById("medCategory").value = med.category;
+        document.getElementById("medPrice").value = med.price;
+
+        editIndex = index;
+        openModal();
+    }
+
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const filtered = medicines.filter(m => m.name.toLowerCase().includes(query));
+      renderTable(filtered);
+    });
+
+    renderTable();
+    // Close modal when clicking outside the form
+    modal.addEventListener("click", function (e) {
+    if (e.target === modal) {
+        closeModal();
+    }
+    });
+
+  </script>
+</body>
+</html>
