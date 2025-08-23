@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - MediCare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --clr-dark-green: #1a1a1a;
+      --clr-light: #d1d5db;
+      --clr-darker-green: #0d0d0d;
+      --clr-soft-green: #00c4f5;
+      --clr-muted-green: #008080;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+    body {
+      background: #0d0d0d;
+      color: #ffffff;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .modal {
+      background-color: var(--clr-dark-green);
+      max-width: 1000px;
+      width: 90%;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    .modal .left-panel {
+      flex: 1;
+      background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2409870e-85bd-4893-9edb-916f9de17c06.png') center center/cover no-repeat;
+    }
+    .modal .right-panel {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: var(--clr-dark-green);
+    }
+    .modal .right-panel h1 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .form-group {
+      flex: 1 1 calc(50% - 10px);
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group.full-width {
+      flex: 1 1 100%;
+    }
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--clr-light);
+      margin-bottom: 6px;
+    }
+    .input-icon-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-icon-wrapper input {
+      padding: 12px;
+      padding-right: 36px;
+      border-radius: 12px;
+      border: none;
+      background-color: var(--clr-light);
+      font-size: 0.9rem;
+      color: var(--clr-darker-green);
+      width: 100%;
+    }
+    .input-icon-wrapper i {
+      position: absolute;
+      right: 12px;
+      color: var(--clr-darker-green);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+    .input-icon-wrapper input:focus {
+      outline: 2px solid var(--clr-soft-green);
+      background-color: #fff;
+    }
+    .login-btn {
+      background-color: var(--clr-soft-green);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 0 12px var(--clr-soft-green);
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    .login-btn:hover {
+      background-color: var(--clr-muted-green);
+      box-shadow: 0 0 16px var(--clr-soft-green);
+    }
+    .additional-links {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.85rem;
+    }
+    .additional-links a {
+      color: #e0e5dc;
+      text-decoration: none;
+    }
+    .additional-links a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .modal {
+        flex-direction: column;
+      }
+      .modal .left-panel,
+      .modal .right-panel {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="modal">
+    <div class="left-panel"></div>
+    <div class="right-panel">
+      <h1><strong>Medi</strong>Cure</h1>
+      <form>
+        <div class="form-group">
+          <label for="ownername">Owner's Full Name</label>
+          <div class="input-icon-wrapper">
+            <input type="text" id="ownername" placeholder="Name" />
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-icon-wrapper">
+            <input type="email" id="email" placeholder="E-mail" />
+            <i class="fas fa-envelope"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="shopid">Shop ID</label>
+          <div class="input-icon-wrapper">
+            <input type="text" id="shopid" placeholder="XXXX987" />
+            <i class="fas fa-id-badge"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="shopname">Shop Name</label>
+          <div class="input-icon-wrapper">
+            <input type="text" id="shopname" placeholder="Shop name" />
+            <i class="fas fa-store"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <div class="input-icon-wrapper">
+            <input type="text" id="location" placeholder="Region" />
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <div class="input-icon-wrapper">
+            <input type="tel" id="phone" placeholder="Phone Number" />
+            <i class="fas fa-phone-alt"></i>
+          </div>
+        </div>
+        <div class="form-group full-width">
+          <label for="password">Create Password</label>
+          <div class="input-icon-wrapper">
+            <input type="password" id="password" placeholder="Enter your password" />
+            <i class="fas fa-lock"></i>
+          </div>
+        </div>
+        <div class="form-group full-width">
+          <button type="submit" class="login-btn">CREATE ACCOUNT</button>
+        </div>
+        <div class="form-group full-width additional-links">
+          <p>Already registered? <a href="#">Login here</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

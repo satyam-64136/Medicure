@@ -1,32 +1,28 @@
 import sqlite3
+from faker import Faker
+from werkzeug.security import generate_password_hash
 
-conn = sqlite3.connect('medicines.db')
+fake = Faker()
+
+# Connect to users database
+conn = sqlite3.connect("users.db")
 c = conn.cursor()
 
-# Create table
-c.execute('''
-CREATE TABLE IF NOT EXISTS medicines (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    generic TEXT NOT NULL,
-    alt1 TEXT,
-    alt2 TEXT
-)
-''')
+for _ in range(10):
+    firstName = fake.first_name()
+    lastName = fake.last_name()
+    email = fake.unique.email()
+    phone = fake.phone_number()
+    password = generate_password_hash("password123")  # default password for testing
 
-# Read medicine.txt and insert
-with open('medicine.txt', 'r', encoding='utf-8') as f:
-    for line in f:
-        line = line.strip()
-        if line:
-            parts = [p.strip() for p in line.split('/')]
-            if len(parts) >= 3:
-                generic, alt1, alt2 = parts[0], parts[1], parts[2]
-                c.execute(
-                    "INSERT INTO medicines (generic, alt1, alt2) VALUES (?, ?, ?)",
-                    (generic, alt1, alt2)
-                )
+    try:
+        c.execute(
+            "INSERT INTO users (firstName, lastName, email, phone, password) VALUES (?, ?, ?, ?, ?)",
+            (firstName, lastName, email, phone, password)
+        )
+    except sqlite3.IntegrityError:
+        pass  # skip if email already exists
 
 conn.commit()
 conn.close()
-print("✅ Data imported successfully!")
- 
+print("✅ 10 random users added successfully!")
