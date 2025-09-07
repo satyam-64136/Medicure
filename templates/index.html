@@ -7,6 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+  <!-- Slick Slider CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
   <style>
     /* Preloader */
     #preloader {
@@ -52,12 +55,12 @@
     body::-webkit-scrollbar {
       display: none;
     }
-
-    /* Transparent navbar container */
+    /* Navbar Placeholder */
     #navbar-placeholder {
+      position: relative;
+      z-index: 20;
       background: transparent !important;
     }
-
     /* Hero */
     .hero {
       text-align: center;
@@ -142,7 +145,6 @@
       background-color: #2563eb;
       box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
     }
-
     /* Search bar */
     .search-bar {
       display: flex;
@@ -190,6 +192,70 @@
     .search-icon:hover {
       transform: scale(1.1);
     }
+    /* Slider */
+    .slider-section {
+      position: relative;
+      z-index: 1;
+      padding: 60px 20px;
+      background: white;
+      margin-top: 100px;
+    }
+    .slider-section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 32px;
+      color: #121212;
+    }
+    .slider {
+      max-width: 1200px;
+      margin: 0 auto;
+      cursor: grab;
+      position: relative;
+      z-index: 1;
+    }
+    .slider-item {
+      padding: 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 0 10px;
+      outline: none;
+      cursor: pointer;
+    }
+    .slider-item img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .slider-item h3 {
+      margin-top: 16px;
+      font-size: 20px;
+      pointer-events: none;
+    }
+    .slider-item p {
+      color: #666;
+      margin-top: 8px;
+      pointer-events: none;
+    }
+    /* Slick Slider Arrows and Dots */
+    .slick-prev:before, .slick-next:before {
+      color: #3b82f6;
+      font-size: 30px;
+    }
+    .slick-dots li button:before {
+      color: #3b82f6;
+      font-size: 12px;
+    }
+    .slick-dots li.slick-active button:before {
+      color: #3b82f6;
+    }
+    /* Sidebar Fix */
+    .sidebar {
+      z-index: 1050 !important;
+    }
   </style>
 </head>
 <body>
@@ -197,10 +263,8 @@
   <div id="preloader">
     <div class="loader"></div>
   </div>
-
-  <!-- Navbar will be inserted here -->
+  <!-- Navbar -->
   <div id="navbar-placeholder"></div>
-
   <!-- Hero -->
   <main>
     <section class="hero" data-aos="fade-up">
@@ -216,34 +280,97 @@
         <button class="get-started">Get Started →</button>
       </div>
     </section>
+    <!-- Slider -->
+    <section class="slider-section">
+      <h2>Featured Medicines</h2>
+      <div class="slider">
+        <div class="slider-item">
+          <img src="https://via.placeholder.com/300x200?text=Medicine+1" alt="Medicine 1">
+          <h3>Paracetamol</h3>
+          <p>Pain relief and fever reducer.</p>
+        </div>
+        <div class="slider-item">
+          <img src="https://via.placeholder.com/300x200?text=Medicine+2" alt="Medicine 2">
+          <h3>Amoxicillin</h3>
+          <p>Antibiotic for bacterial infections.</p>
+        </div>
+        <div class="slider-item">
+          <img src="https://via.placeholder.com/300x200?text=Medicine+3" alt="Medicine 3">
+          <h3>Ibuprofen</h3>
+          <p>Anti-inflammatory and pain relief.</p>
+        </div>
+        <div class="slider-item">
+          <img src="https://via.placeholder.com/300x200?text=Medicine+4" alt="Medicine 4">
+          <h3>Loratadine</h3>
+          <p>Antihistamine for allergies.</p>
+        </div>
+      </div>
+    </section>
   </main>
-
   <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   <script>
+    // Hide preloader and initialize slider after page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+        // Initialize slider after preloader is hidden
+        $('.slider').slick({
+          dots: true,
+          infinite: true,
+          speed: 300,
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          arrows: true,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
+        });
+      }, 500);
+      AOS.init({ duration: 1000, once: true });
+    });
     // Load Navbar
     fetch('navbar.html')
       .then(response => response.text())
       .then(html => {
         document.getElementById('navbar-placeholder').innerHTML = html;
-
-        // After inserting navbar, reattach its JS
+        // Reattach navbar event listeners
         const hamburger = document.getElementById('hamburger');
         const sidebar = document.getElementById('sidebar');
         const navbar = document.getElementById('navbar');
         const openLogin = document.getElementById('openLogin');
         const loginPopup = document.getElementById('loginPopup');
         const closePopup = document.getElementById('closePopup');
-
-        // Hamburger toggle
+        const formToggle = document.getElementById('formToggle');
+        const indicator = formToggle.querySelector('.active-indicator');
+        const leftBtn = formToggle.querySelector('.left');
+        const rightBtn = formToggle.querySelector('.right');
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
         hamburger.addEventListener('click', () => {
           hamburger.classList.toggle('active');
           sidebar.classList.toggle('active');
           navbar.classList.toggle('open');
-          hamburger.setAttribute('aria-expanded', sidebar.classList.contains('active') ? 'true' : 'false');
+          const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+          hamburger.setAttribute('aria-expanded', String(!expanded));
         });
-
-        // Close sidebar when clicking outside
         document.addEventListener('click', (e) => {
           if (!navbar.contains(e.target) && sidebar.classList.contains('active')) {
             hamburger.classList.remove('active');
@@ -252,8 +379,6 @@
             hamburger.setAttribute('aria-expanded', 'false');
           }
         });
-
-        // Escape key closes sidebar
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && sidebar.classList.contains('active')) {
             hamburger.classList.remove('active');
@@ -262,69 +387,77 @@
             hamburger.setAttribute('aria-expanded', 'false');
           }
         });
-
-        // Open login popup
-        openLogin.addEventListener('click', () => {
-          loginPopup.classList.add('active');
-        });
-
-        // Close popup
-        closePopup.addEventListener('click', () => {
-          loginPopup.classList.remove('active');
-        });
-        loginPopup.addEventListener('click', (e) => {
-          if (e.target === loginPopup) {
-            loginPopup.classList.remove('active');
+        if (openLogin) {
+          openLogin.addEventListener('click', () => {
+            if (loginPopup) loginPopup.classList.add('active');
+          });
+        }
+        if (closePopup) {
+          closePopup.addEventListener('click', () => {
+            if (loginPopup) loginPopup.classList.remove('active');
+          });
+        }
+        if (loginPopup) {
+          loginPopup.addEventListener('click', (e) => {
+            if (e.target === loginPopup) {
+              loginPopup.classList.remove('active');
+            }
+          });
+        }
+        // Reattach form toggle event listener
+        formToggle.addEventListener('click', () => {
+          if (leftBtn.classList.contains('active')) {
+            leftBtn.classList.remove('active');
+            rightBtn.classList.add('active');
+            indicator.style.left = '50%';
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'flex';
+          } else {
+            rightBtn.classList.remove('active');
+            leftBtn.classList.add('active');
+            indicator.style.left = '2px';
+            signupForm.style.display = 'flex';
+            loginForm.style.display = 'none';
           }
         });
       });
-
-    // Preloader
-    window.addEventListener('load', () => {
-      document.getElementById('preloader').classList.add('hidden');
-      AOS.init({ duration: 1000, once: true });
-    });
-
     // Search Functionality
     const searchBar = document.getElementById('searchBar');
     const searchIcon = document.getElementById('searchIcon');
     const searchInput = document.getElementById('searchInput');
     const searchForm = document.getElementById('searchForm');
-
     function expandSearchBar() {
       searchBar.classList.add('expanded');
       searchInput.focus();
     }
-
-    searchIcon.addEventListener('click', (event) => {
-      if (!searchBar.classList.contains('expanded')) {
-        expandSearchBar();
-      } else {
-        if (searchInput.value.trim() !== '') {
+    if (searchIcon) {
+      searchIcon.addEventListener('click', (event) => {
+        if (!searchBar.classList.contains('expanded')) {
+          expandSearchBar();
+        } else if (searchInput.value.trim() !== '') {
           searchForm.submit();
         }
-      }
-      event.preventDefault();
-    });
-
+        event.preventDefault();
+      });
+    }
     document.addEventListener('keydown', (event) => {
       if (event.code === 'Space' && !searchBar.classList.contains('expanded')) {
         event.preventDefault();
         expandSearchBar();
       }
     });
-
-    searchInput.addEventListener('blur', () => {
-      if (searchInput.value === '') {
-        searchBar.classList.remove('expanded');
-      }
-    });
-
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && searchInput.value.trim() !== '') {
-        searchForm.submit();
-      }
-    });
+    if (searchInput) {
+      searchInput.addEventListener('blur', () => {
+        if (searchInput.value === '') {
+          searchBar.classList.remove('expanded');
+        }
+      });
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+          searchForm.submit();
+        }
+      });
+    }
   </script>
 </body>
 </html>

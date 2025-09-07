@@ -15,20 +15,17 @@
       --glass-bg: rgba(255, 255, 255, 0.4);
       --border-glass: rgba(255, 255, 255, 0.2);
     }
-
     * {
       box-sizing: border-box;
       font-family: 'Outfit', sans-serif;
       margin: 0;
       padding: 0;
     }
-
     body {
       background: linear-gradient(to bottom right, var(--sky-blue), var(--white));
       min-height: 100vh;
       display: flex;
     }
-
     .sidebar {
       width: 200px;
       background: var(--glass-bg);
@@ -42,14 +39,12 @@
       top: 0;
       height: 100vh;
     }
-
     .sidebar h2 {
       font-size: 1.3rem;
       color: var(--primary-blue);
       margin-bottom: 2rem;
       text-align: center;
     }
-
     .sidebar button {
       background: transparent;
       border: 1px solid var(--primary-blue);
@@ -60,12 +55,27 @@
       font-weight: 600;
       transition: all 0.2s ease;
     }
-
     .sidebar button:hover {
       background: var(--primary-blue);
       color: white;
     }
-
+    .user-info {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      text-align: center;
+      border: 1px solid var(--border-glass);
+    }
+    .user-info p {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      margin: 0.3rem 0;
+    }
+    .user-info .user-name {
+      font-weight: 600;
+      color: var(--primary-blue);
+    }
     .main {
       flex: 1;
       padding: 2rem;
@@ -73,13 +83,11 @@
       flex-direction: column;
       gap: 2rem;
     }
-
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
     .header input {
       padding: 0.6rem 1rem;
       border: none;
@@ -88,7 +96,6 @@
       backdrop-filter: blur(6px);
       width: 250px;
     }
-
     .btn-primary {
       padding: 0.7rem 1.4rem;
       background: var(--primary-blue);
@@ -100,12 +107,10 @@
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
       transition: all 0.2s ease;
     }
-
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
     }
-
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
@@ -114,7 +119,6 @@
       padding: 1rem;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
@@ -122,20 +126,16 @@
       border-radius: 12px;
       overflow: hidden;
     }
-
     th, td {
       padding: 1rem;
       text-align: left;
     }
-
     thead {
       background: rgba(230, 242, 255, 0.8);
     }
-
     tbody tr:nth-child(even) {
       background: rgba(255, 255, 255, 0.4);
     }
-
     .edit, .delete {
       padding: 0.5rem 1rem;
       border: none;
@@ -144,34 +144,28 @@
       color: white;
       font-weight: 500;
     }
-
     .edit {
       background: #10B981;
     }
-
     .delete {
       background: #EF4444;
     }
-
     .chart-box {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-top: 1rem;
     }
-
     .circular-progress {
       position: relative;
       width: 200px;
       height: 200px;
     }
-
     .circular-progress svg {
       width: 200px;
       height: 200px;
       transform: rotate(-90deg);
     }
-
     .circular-progress circle {
       fill: none;
       stroke-width: 15;
@@ -179,18 +173,15 @@
       cy: 100;
       r: 85;
     }
-
     .circular-progress .bg {
       stroke: #e5e7eb;
     }
-
     .circular-progress .progress {
       stroke-linecap: round;
       stroke-dasharray: 534;
       stroke-dashoffset: 534;
       transition: stroke-dashoffset 0.8s ease;
     }
-
     .percentage-text {
       position: absolute;
       top: 50%;
@@ -200,7 +191,6 @@
       font-size: 24px;
       color: #111827;
     }
-
     #floatingTooltip {
         position: fixed;
         z-index: 1000;
@@ -216,7 +206,6 @@
         max-width: 260px;
         display: none;
     }
-
     /* Modal */
     .modal {
       position: fixed;
@@ -227,7 +216,6 @@
       justify-content: center;
       align-items: center;
     }
-
     .modal form {
       background: white;
       padding: 2rem;
@@ -237,13 +225,11 @@
       flex-direction: column;
       gap: 1rem;
     }
-
     .modal input {
       padding: 0.6rem;
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-
     .modal button {
       padding: 0.6rem;
       border: none;
@@ -252,16 +238,13 @@
       color: white;
       cursor: pointer;
     }
-
     .modal .cancel {
       background: gray;
     }
-
     @media (max-width: 768px) {
       body {
         flex-direction: column;
       }
-
       .sidebar {
         flex-direction: row;
         height: auto;
@@ -271,87 +254,130 @@
         justify-content: space-around;
       }
     }
-
-
-.custom-select-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.custom-select-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  width: 16px;
-  height: 16px;
-  background-image: url('https://www.svgrepo.com/show/357035/angle-down.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  transform: translateY(-50%);
-  pointer-events: none;
-  opacity: 0.6;
-}
-.styled-select {
-  padding: 0.6rem;
-  padding-right: 2.5rem;
-  border: 1px solid var(--primary-blue);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  color: var(--text-main);
-  transition: border 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-}
-
-.custom-select-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(37, 99, 235, 0.3);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  max-height: 180px;
-  overflow-y: auto;
-  z-index: 1000;
-  display: none;
-  list-style: none;
-  margin-top: 5px;
-  padding: 0;
-}
-
-.custom-select-list li {
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.custom-select-list li:hover {
-  background: rgba(37, 99, 235, 0.1);
-}
-
+    .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .custom-select-wrapper::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      width: 16px;
+      height: 16px;
+      background-image: url('https://www.svgrepo.com/show/357035/angle-down.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      transform: translateY(-50%);
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    .styled-select {
+      padding: 0.6rem;
+      padding-right: 2.5rem;
+      border: 1px solid var(--primary-blue);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      color: var(--text-main);
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+    }
+    .custom-select-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      max-height: 180px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      list-style: none;
+      margin-top: 5px;
+      padding: 0;
+    }
+    .custom-select-list li {
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .custom-select-list li:hover {
+      background: rgba(37, 99, 235, 0.1);
+    }
+    /* Dropdown for medicines */
+    .dropdown-container {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .dropdown-btn {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .dropdown-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+    }
+    .dropdown-arrow {
+      width: 16px;
+      height: 16px;
+      background-image: url('https://www.svgrepo.com/show/357035/angle-down.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: transform 0.2s ease;
+    }
+    .dropdown-arrow.rotated {
+      transform: rotate(180deg);
+    }
+    .dropdown-content {
+      display: none;
+      margin-top: 0.5rem;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+    .dropdown-content table {
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
-
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>Medicure</h2>
+    <div class="user-info">
+      <p class="user-name">{{ user['firstName'] }} {{ user['lastName'] }}</p>
+      <p>{{ user['email'] }}</p>
+    </div>
     <button onclick="renderTable()">Dashboard</button>
     <button onclick="openModal()">Add Medicine</button>
-    <button>Xtra buttom</button>
+    <button onclick="window.location.href='{{ url_for('logout') }}'">Logout</button>
   </div>
-
   <!-- Main Content -->
   <div class="main">
     <div class="header">
       <input type="text" id="searchInput" placeholder="Search medicine..." />
       <button class="btn-primary" onclick="openModal()">+ Add Medicine</button>
     </div>
-
     <div class="glass-card">
       <table>
         <thead>
@@ -366,8 +392,14 @@
         </thead>
         <tbody id="medicineTable"></tbody>
       </table>
+      <div class="dropdown-container">
+        <button class="dropdown-btn" id="dropdownBtn" onclick="toggleDropdown()">
+          Show More
+          <div class="dropdown-arrow" id="dropdownArrow"></div>
+        </button>
+        <div class="dropdown-content" id="dropdownContent"></div>
+      </div>
     </div>
-
     <div class="glass-card chart-box">
       <div class="circular-progress">
         <svg>
@@ -378,10 +410,8 @@
       </div>
     </div>
   </div>
-
   <!-- Tooltip -->
   <div id="floatingTooltip"></div>
-
   <!-- Modal -->
   <div class="modal" id="modal">
     <form id="medicineForm">
@@ -390,17 +420,14 @@
       <input type="number" id="medQty" placeholder="Quantity" required />
       <input type="date" id="medExpiry" required />
       <div class="custom-select-wrapper">
-  <input type="text" id="medCategory" class="styled-select" placeholder="Select or type category" required autocomplete="off" />
-  <ul id="categoryList" class="custom-select-list"></ul>
-</div>
-
-
+        <input type="text" id="medCategory" class="styled-select" placeholder="Select or type category" required autocomplete="off" />
+        <ul id="categoryList" class="custom-select-list"></ul>
+      </div>
       <input type="number" id="medPrice" placeholder="Price" required />
       <button type="submit">Save</button>
       <button type="button" class="cancel" onclick="closeModal()">Cancel</button>
     </form>
   </div>
-
   <script>
     const totalCapacity = 10000;
     const medicines = [
@@ -409,100 +436,134 @@
       { name: "Ibuprofen", qty: 1200, expiry: "2024-11-10", category: "Painkiller", price: 8 },
       { name: "Cetirizine", qty: 500, expiry: "2024-10-01", category: "Antibiotic", price: 9 }
     ];
-
     const table = document.getElementById("medicineTable");
+    const dropdownContent = document.getElementById("dropdownContent");
+    const dropdownBtn = document.getElementById("dropdownBtn");
+    const dropdownArrow = document.getElementById("dropdownArrow");
     const modal = document.getElementById("modal");
     const form = document.getElementById("medicineForm");
     const totalPercent = document.getElementById("totalPercent");
     const progressCircle = document.querySelector(".progress");
     const tooltip = document.getElementById("floatingTooltip");
-
     const categories = [
-  "Antibiotic",
-  "Painkiller",
-  "Allergy",
-  "Antacid",
-  "Cough Syrup",
-  "Vitamin Supplement",
-  "Antiviral",
-  "Steroid",
-  "Anti-inflammatory",
-  "Antifungal"
-];
+      "Antibiotic",
+      "Painkiller",
+      "Allergy",
+      "Antacid",
+      "Cough Syrup",
+      "Vitamin Supplement",
+      "Antiviral",
+      "Steroid",
+      "Anti-inflammatory",
+      "Antifungal"
+    ];
+    const medCategoryInput = document.getElementById("medCategory");
+    const categoryList = document.getElementById("categoryList");
 
-const medCategoryInput = document.getElementById("medCategory");
-const categoryList = document.getElementById("categoryList");
-
-medCategoryInput.addEventListener("focus", () => {
-  const value = medCategoryInput.value.toLowerCase();
-  const filtered = categories.filter(cat => cat.toLowerCase().includes(value));
-
-  categoryList.innerHTML = "";
-  if (filtered.length > 0) {
-    categoryList.style.display = "block";
-    filtered.forEach(cat => {
-      const li = document.createElement("li");
-      li.textContent = cat;
-      li.onclick = () => {
-        medCategoryInput.value = cat;
-        categoryList.style.display = "none";
-      };
-      categoryList.appendChild(li);
+    medCategoryInput.addEventListener("focus", () => {
+      const value = medCategoryInput.value.toLowerCase();
+      const filtered = categories.filter(cat => cat.toLowerCase().includes(value));
+      categoryList.innerHTML = "";
+      if (filtered.length > 0) {
+        categoryList.style.display = "block";
+        filtered.forEach(cat => {
+          const li = document.createElement("li");
+          li.textContent = cat;
+          li.onclick = () => {
+            medCategoryInput.value = cat;
+            categoryList.style.display = "none";
+          };
+          categoryList.appendChild(li);
+        });
+      }
     });
-  }
-});
 
-
-// Hide dropdown if clicked outside
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".custom-select-wrapper")) {
-    categoryList.style.display = "none";
-  }
-});
-
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".custom-select-wrapper")) {
+        categoryList.style.display = "none";
+      }
+    });
 
     function renderTable(data = medicines) {
       table.innerHTML = "";
-      data.forEach((m, i) => {
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-          <td>${m.name}</td>
-          <td>${m.qty}</td>
-          <td>${m.expiry}</td>
-          <td>${m.category}</td>
-          <td>₹${m.price}</td>
-
-          <td>
-            <button class="edit" onclick="editMedicine(${i})">Edit</button>
-            <button class="delete" onclick="deleteMedicine(${i})">Delete</button>
-          </td>
-        `;
-
-        row.addEventListener("mousemove", (e) => {
-          const percent = ((m.qty / totalCapacity) * 100).toFixed(1);
-          const cheaper = medicines
-            .filter(other => other.category === m.category && other.price < m.price && other.name !== m.name)
-            .sort((a, b) => a.price - b.price)[0];
-
-          tooltip.style.display = "block";
-          tooltip.style.left = e.pageX + 15 + "px";
-          tooltip.style.top = e.pageY + 15 + "px";
-
-          tooltip.innerHTML = `
-            <strong>${m.name}</strong><br>
-            Storage: ${percent}% of capacity<br>
-            ${cheaper ? `<span>Alt: ${cheaper.name} (₹${cheaper.price})</span>` : `<em>No cheaper alternative</em>`}
-          `;
-        });
-
-        row.addEventListener("mouseleave", () => {
-          tooltip.style.display = "none";
-        });
-
+      dropdownContent.innerHTML = "";
+      const visibleMedicines = data.slice(0, 5);
+      const hiddenMedicines = data.slice(5);
+      visibleMedicines.forEach((m, i) => {
+        const row = createTableRow(m, i);
         table.appendChild(row);
       });
+      if (hiddenMedicines.length > 0) {
+        dropdownBtn.style.display = "flex";
+        const hiddenTable = document.createElement("table");
+        hiddenTable.innerHTML = `
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Qty</th>
+              <th>Expiry</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        `;
+        hiddenMedicines.forEach((m, i) => {
+          const row = createTableRow(m, i + 5);
+          hiddenTable.querySelector("tbody").appendChild(row);
+        });
+        dropdownContent.appendChild(hiddenTable);
+      } else {
+        dropdownBtn.style.display = "none";
+      }
       updateTotalProgress();
+    }
+
+    function createTableRow(m, i) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${m.name}</td>
+        <td>${m.qty}</td>
+        <td>${m.expiry}</td>
+        <td>${m.category}</td>
+        <td>₹${m.price}</td>
+        <td>
+          <button class="edit" onclick="editMedicine(${i})">Edit</button>
+          <button class="delete" onclick="deleteMedicine(${i})">Delete</button>
+        </td>
+      `;
+      row.addEventListener("mousemove", (e) => {
+        const percent = ((m.qty / totalCapacity) * 100).toFixed(1);
+        const cheaper = medicines
+          .filter(other => other.category === m.category && other.price < m.price && other.name !== m.name)
+          .sort((a, b) => a.price - b.price)[0];
+        tooltip.style.display = "block";
+        tooltip.style.left = e.pageX + 15 + "px";
+        tooltip.style.top = e.pageY + 15 + "px";
+        tooltip.innerHTML = `
+          <strong>${m.name}</strong><br>
+          Storage: ${percent}% of capacity<br>
+          ${cheaper ? `<span>Alt: ${cheaper.name} (₹${cheaper.price})</span>` : `<em>No cheaper alternative</em>`}
+        `;
+      });
+      row.addEventListener("mouseleave", () => {
+        tooltip.style.display = "none";
+      });
+      return row;
+    }
+
+    function toggleDropdown() {
+      const content = document.getElementById("dropdownContent");
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        dropdownBtn.textContent = "Show More";
+        dropdownArrow.classList.remove("rotated");
+      } else {
+        content.style.display = "block";
+        dropdownBtn.textContent = "Show Less";
+        dropdownArrow.classList.add("rotated");
+      }
     }
 
     function updateTotalProgress() {
@@ -523,29 +584,26 @@ document.addEventListener("click", (e) => {
       modal.style.display = "none";
     }
 
-let editIndex = null;
+    let editIndex = null;
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  const updatedMed = {
-    name: document.getElementById("medName").value,
-    qty: parseInt(document.getElementById("medQty").value),
-    expiry: document.getElementById("medExpiry").value,
-    category: document.getElementById("medCategory").value,
-    price: parseFloat(document.getElementById("medPrice").value)
-  };
-
-  if (editIndex !== null) {
-    medicines[editIndex] = updatedMed;
-    editIndex = null;
-  } else {
-    medicines.push(updatedMed);
-  }
-
-  closeModal();
-  renderTable();
-});
-
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const updatedMed = {
+        name: document.getElementById("medName").value,
+        qty: parseInt(document.getElementById("medQty").value),
+        expiry: document.getElementById("medExpiry").value,
+        category: document.getElementById("medCategory").value,
+        price: parseFloat(document.getElementById("medPrice").value)
+      };
+      if (editIndex !== null) {
+        medicines[editIndex] = updatedMed;
+        editIndex = null;
+      } else {
+        medicines.push(updatedMed);
+      }
+      closeModal();
+      renderTable();
+    });
 
     function deleteMedicine(index) {
       medicines.splice(index, 1);
@@ -553,17 +611,15 @@ form.addEventListener("submit", function (e) {
     }
 
     function editMedicine(index) {
-        const med = medicines[index];
-        document.getElementById("medName").value = med.name;
-        document.getElementById("medQty").value = med.qty;
-        document.getElementById("medExpiry").value = med.expiry;
-        document.getElementById("medCategory").value = med.category;
-        document.getElementById("medPrice").value = med.price;
-
-        editIndex = index;
-        openModal();
+      const med = medicines[index];
+      document.getElementById("medName").value = med.name;
+      document.getElementById("medQty").value = med.qty;
+      document.getElementById("medExpiry").value = med.expiry;
+      document.getElementById("medCategory").value = med.category;
+      document.getElementById("medPrice").value = med.price;
+      editIndex = index;
+      openModal();
     }
-
 
     document.getElementById("searchInput").addEventListener("input", function () {
       const query = this.value.toLowerCase();
@@ -572,13 +628,12 @@ form.addEventListener("submit", function (e) {
     });
 
     renderTable();
-    // Close modal when clicking outside the form
-    modal.addEventListener("click", function (e) {
-    if (e.target === modal) {
-        closeModal();
-    }
-    });
 
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
   </script>
 </body>
 </html>
