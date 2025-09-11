@@ -1,11 +1,60 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 import sqlite3
 import os
+import random
+import string
+import time
+from threading import Timer
 from werkzeug.security import generate_password_hash, check_password_hash
+import requests
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # Use a strong, unique secret key in production
 app.static_folder = 'static'
+
+# In-memory storage for OTPs (replace with a database in production)
+otp_store = {}
+TELEGRAM_BOT_TOKEN = "8249208001:AAErFh7Ds7CRcjvgl9Tyw0bIT6yDEyMxUSw"
+AUTHORIZED_CHAT_IDS = ["8187047774", "5471661264"]
+
+# ---------- OTP Helpers ----------
+def generate_otp():
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(chars) for _ in range(8))
+
+def delete_otp(chat_id):
+    if chat_id in otp_store:
+        del otp_store[chat_id]
+
+def send_telegram_otp(chat_id, otp):
+    try:
+        response = requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+            json={"chat_id": chat_id, "text": f"Your OTP is: {otp} (Valid for 1 minute)"},
+            timeout=10
+        )
+        print(f"Telegram API Response for {chat_id}: {response.json()}")  # Debugging
+        if response.json().get("ok"):
+            message_id = response.json()["result"]["message_id"]
+            Timer(60.0, delete_telegram_message, args=[chat_id, message_id]).start()
+            return True
+        else:
+            print(f"Telegram API Error for {chat_id}: {response.json()}")
+            return False
+    except Exception as e:
+        print(f"Exception in send_telegram_otp for {chat_id}: {e}")
+        return False
+
+def delete_telegram_message(chat_id, message_id):
+    try:
+        response = requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/deleteMessage",
+            json={"chat_id": chat_id, "message_id": message_id},
+            timeout=10
+        )
+        print(f"Delete Message Response for {chat_id}: {response.json()}")  # Debugging
+    except Exception as e:
+        print(f"Exception in delete_telegram_message for {chat_id}: {e}")
 
 # ---------- Database Setup ----------
 def setup_medicines_db():
@@ -65,6 +114,30 @@ def setup_users_db():
         if 'conn' in locals():
             conn.close()
 
+def setup_user_inventory_db():
+    try:
+        conn = sqlite3.connect('user_inventory.db')
+        c = conn.cursor()
+        c.execute('''
+        CREATE TABLE IF NOT EXISTS user_inventory (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            medicine_name TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            expiry_date TEXT,
+            category TEXT,
+            price REAL NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+        ''')
+        conn.commit()
+        print("✅ User inventory database set up successfully!")
+    except Exception as e:
+        print(f"❌ Error setting up user inventory database: {e}")
+    finally:
+        if 'conn' in locals():
+            conn.close()
+
 # ---------- Database Helpers ----------
 def get_medicines_conn():
     conn = sqlite3.connect('medicines.db')
@@ -73,6 +146,11 @@ def get_medicines_conn():
 
 def get_users_conn():
     conn = sqlite3.connect('users.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_user_inventory_conn():
+    conn = sqlite3.connect('user_inventory.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -217,6 +295,106 @@ def delete_user(user_id):
         if 'conn' in locals():
             conn.close()
 
+# ---------- User Inventory Routes ----------
+@app.route("/add_medicine", methods=["POST"])
+def add_medicine():
+    if "user_id" not in session:
+        return jsonify({"success": False, "error": "User not logged in"}), 401
+
+    data = request.json
+    user_id = session["user_id"]
+    medicine_name = data.get("name")
+    quantity = data.get("qty")
+    expiry = data.get("expiry")
+    category = data.get("category")
+    price = data.get("price")
+
+    if not all([medicine_name, quantity, expiry, category, price]):
+        return jsonify({"success": False, "error": "Missing required fields"}), 400
+
+    try:
+        conn = get_user_inventory_conn()
+        conn.execute(
+            "INSERT INTO user_inventory (user_id, medicine_name, quantity, expiry_date, category, price) VALUES (?, ?, ?, ?, ?, ?)",
+            (user_id, medicine_name, quantity, expiry, category, price)
+        )
+        conn.commit()
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+    finally:
+        if 'conn' in locals():
+            conn.close()
+
+@app.route("/get_user_medicines")
+def get_user_medicines():
+    if "user_id" not in session:
+        return jsonify({"success": False, "error": "User not logged in"}), 401
+
+    try:
+        conn = get_user_inventory_conn()
+        medicines = conn.execute(
+            "SELECT * FROM user_inventory WHERE user_id = ?",
+            (session["user_id"],)
+        ).fetchall()
+        return jsonify([dict(medicine) for medicine in medicines]), 200
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+    finally:
+        if 'conn' in locals():
+            conn.close()
+
+@app.route("/delete_medicine/<int:medicine_id>", methods=["DELETE"])
+def delete_medicine(medicine_id):
+    if "user_id" not in session:
+        return jsonify({"success": False, "error": "User not logged in"}), 401
+
+    try:
+        conn = get_user_inventory_conn()
+        conn.execute(
+            "DELETE FROM user_inventory WHERE id = ? AND user_id = ?",
+            (medicine_id, session["user_id"])
+        )
+        conn.commit()
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+    finally:
+        if 'conn' in locals():
+            conn.close()
+
+@app.route("/send_otp")
+def send_otp():
+    otp = generate_otp()
+    success_count = 0
+    for chat_id in AUTHORIZED_CHAT_IDS:  # Send to all authorized chat IDs
+        otp_store[chat_id] = {
+            'otp': otp,
+            'expires_at': time.time() + 60  # 1 minute
+        }
+        if send_telegram_otp(chat_id, otp):
+            success_count += 1
+    print(f"Generated OTP: {otp}")  # Print OTP for debugging
+    if success_count == len(AUTHORIZED_CHAT_IDS):
+        return jsonify({"otp": otp, "message": f"OTP sent to all {success_count} authorized users"})
+    else:
+        return jsonify({"otp": otp, "message": f"OTP sent to {success_count}/{len(AUTHORIZED_CHAT_IDS)} authorized users"})
+
+@app.route("/validate_otp", methods=["POST"])
+def validate_otp():
+    data = request.json
+    user_otp = data.get('otp')
+    chat_id = data.get('chat_id', AUTHORIZED_CHAT_IDS[0])  # Default to the first chat ID
+    print(f"Validating OTP: {user_otp} for chat_id: {chat_id}")  # Print for debugging
+    if chat_id in otp_store:
+        stored_otp = otp_store[chat_id]['otp']
+        expires_at = otp_store[chat_id]['expires_at']
+        print(f"Stored OTP: {stored_otp}, Expires at: {expires_at}")  # Print for debugging
+        if user_otp == stored_otp and time.time() < expires_at:
+            delete_otp(chat_id)
+            return jsonify({"success": True})
+    return jsonify({"success": False, "error": "Invalid or expired OTP"})
+
 @app.route("/navbar.html")
 def navbar():
     return render_template("navbar.html")
@@ -225,4 +403,5 @@ def navbar():
 if __name__ == "__main__":
     setup_medicines_db()
     setup_users_db()
+    setup_user_inventory_db()  # Initialize user inventory database
     app.run(debug=True)
